@@ -40,6 +40,7 @@ class BOMojoScraper(scraper.Scraper):
         runtime = self.runtime_to_minutes(self.get_movie_value(soup,'Runtime'))
         director = self.get_movie_value(soup,'Director')
         rating = self.get_movie_value(soup,'MPAA Rating')
+        budget = self.get_budget(self.get_movie_value(soup,'Production Budget'))
 
         movie_dict = {
             'movie_title':self.get_movie_title(soup),
@@ -47,7 +48,8 @@ class BOMojoScraper(scraper.Scraper):
             'domestic_total_gross':domestic_total_gross,
             'runtime':runtime,
             'director':director,
-            'rating':rating
+            'rating':rating,
+            'budget':budget
         }
 
         return movie_dict
@@ -91,3 +93,8 @@ class BOMojoScraper(scraper.Scraper):
     def runtime_to_minutes(self,runtimestring):
         rt = runtimestring.split(' ')
         return int(rt[0])*60 + int(rt[2])
+        
+    def get_budget(self,x):
+    	x = string(x)
+    	#return float(budg.replace('$','').replace('.','').replace(' ','').replace('million',''))
+    	
