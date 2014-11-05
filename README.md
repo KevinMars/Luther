@@ -2,14 +2,17 @@ Luther
 ======
 2nd Project at Metis.
 
+### Client
 PickFlick: A data science company that consults investors on movie futures.  
 
+### Question
 We want to predict the total box office gross on newly released movies.
 
+### Features
 This movie has just finished its opening weekend and we know the director and production budget. 
-
 We use these features to predict the total box office gross.
 
+### Results
 I found that movies fall into two dictinct categories.
 
 - Movies with large production budgets are more predictable based on their opening wekeend gross.
