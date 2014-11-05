@@ -2,13 +2,10 @@ Luther
 ======
 2nd Project at Metis.
 
-Client
 PickFlick: A data science company that consults investors on movie futures.  
 
-Questions
 We want to predict the total box office gross on newly released movies.
 
-Features
 This movie has just finished its opening weekend and we know the director and production budget. 
 
 We use these features to predict the total box office gross.
