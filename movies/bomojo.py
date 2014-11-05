@@ -40,7 +40,8 @@ class BOMojoScraper(scraper.Scraper):
         runtime = self.runtime_to_minutes(self.get_movie_value(soup,'Runtime'))
         director = self.get_movie_value(soup,'Director')
         rating = self.get_movie_value(soup,'MPAA Rating')
-        budget = self.get_budget(self.get_movie_value(soup,'Production Budget'))
+        budget = self.budget_to_int(self.get_movie_value(soup,'Production Budget'))
+        openingweekendgross = self.opening_weekend_gross_to_int(self.get_movie_value(soup, 'Opening\xa0Weekend:'))
 
         movie_dict = {
             'movie_title':self.get_movie_title(soup),
@@ -49,7 +50,8 @@ class BOMojoScraper(scraper.Scraper):
             'runtime':runtime,
             'director':director,
             'rating':rating,
-            'budget':budget
+            'budget':budget,
+            'openingweekendgross':openingweekendgross
         }
 
         return movie_dict
@@ -61,23 +63,28 @@ class BOMojoScraper(scraper.Scraper):
         returns the string in the next sibling object (the value for that attribute)
         '''
         obj = soup.find(text=re.compile(value_name))
+        
         if not obj: 
             return None
-    
+    	
+    	if "Opening\xa0Weekend" in value_name and u"Limited" in obj:
+    		obj = soup.find(text=re.compile('Wide\xa0Opening\xa0Weekend:'))
+        
         # this works for most of the values
         next_sibling = obj.findNextSibling()
+        
+        
         if next_sibling:
             return next_sibling.text
 
         # this next part works for the director
         elif obj.find_parent('tr'):
-            sibling_cell = obj.find_parent('tr').findNextSibling()
+            sibling_cell = obj.find_parent('td').findNext('td')
             if sibling_cell:
                 return sibling_cell.text
         
         else:
-            return -1
-
+    		return -1
 
     def get_movie_title(self,soup):
         title_tag = soup.find('title')
@@ -94,7 +101,27 @@ class BOMojoScraper(scraper.Scraper):
         rt = runtimestring.split(' ')
         return int(rt[0])*60 + int(rt[2])
         
-    def get_budget(self,x):
-    	x = string(x)
-    	#return float(budg.replace('$','').replace('.','').replace(' ','').replace('million',''))
-    	
+    def budget_to_int(self,budgetstring):
+		if "N/A" in budgetstring:
+			pass
+		else:
+			budgetstring = budgetstring.replace('$','')
+			if "million" in budgetstring:
+				budgetstring = budgetstring.replace(' ','')
+				if "." in budgetstring:
+					budgetstring = budgetstring.replace ('.','').replace('million','00000')
+				else:
+					budgetstring = budgetstring.replace('million','000000')
+			else:
+				budgetstring = budgetstring.replace(',','')
+			return int(budgetstring)
+			
+    def opening_weekend_gross_to_int(self,weekendmoneystring):
+    	try:
+    		return int(weekendmoneystring.replace('$','').replace(',',''))
+    	except:
+			pass
+		
+	
+    			
+    		    	
