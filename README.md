@@ -9,7 +9,7 @@ PickFlick: A data science company that consults investors on movie futures.
 We want to predict the total box office gross on newly released movies.
 
 ### Features
-This movie has just finished its opening weekend and we know the director and production budget. 
+This movie has just finished its opening weekend and we know how much it made its opening weekend and its production budget. 
 We use these features to predict the total box office gross.
 
 ### Results
