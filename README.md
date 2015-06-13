@@ -17,3 +17,5 @@ I found that movies fall into two dictinct categories.
 
 - Movies with large production budgets are more predictable based on their opening wekeend gross.
 - Movies with small production budgets can vary greatly in how they do opening weekend and it is also less of a predictor on how well they will do in theaters.
+
+<b>Please view the powerpoint for more data and visualizations. </b>
